@@ -1,15 +1,17 @@
+/*global chrome*/
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-const App = props => {
-    useEffect(() => {
-      axios.get('/api/hello')
-        .then(res => setState(res.data))
-    }, [])
-const [state, setState] = useState('')
-return(
-    <div>
-      <p>{state.response_text}</p>
+
+function extractRecipe() {
+  chrome.tabs.executeScript({file : "/content.js"});
+}
+function App() {
+  return(
+    <div className="App">
+      <button onClick={() => extractRecipe()}>
+        Save Recipe
+      </button>
     </div>
- )
+  );
 };
 export default App;

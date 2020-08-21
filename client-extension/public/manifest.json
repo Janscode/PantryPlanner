@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Pantry Planner Extension",
+    "description": "This extension allows you to save recipes",
+    "version": "0.0.1",
+  
+    "browser_action": {
+      "default_popup": "index.html",
+      "default_title": "Save a recipe"
+    },
+    "content_security_policy": "script-src 'self' 'sha256-WdbmuQBJwim+IY7HGI92DILfOcRUhtvA643jbKJJCqc='; object-src 'self'",
+    "icons": {
+      "16": "logo-small.png",
+      "48": "logo-small.png",
+      "128": "logo-small.png"
+    },
+    "permissions": [
+      "activeTab" 
+  ]
+  }
