@@ -47,7 +47,7 @@ function searchJson(data, name){
 
 var ld_json = extractLdJson()
 var recipe = {
-                name: ld_json.name,
+                name: searchJson(ld_json, "name"),
                 author: searchJson("author").name,
                 recipeIngredient: searchJson(ld_json, "recipeIngredient")
             };

@@ -38,7 +38,7 @@ export default class App extends React.Component {
       </div>
       {this.state.seen ? <Modal toggle={this.toggleModal} recipe={this.state.recipe} /> :
       <button onClick={this.loadRecipe}>
-      Save Recipe
+      Extract Recipe
       </button>}
     </div>
   );

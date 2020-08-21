@@ -16,6 +16,7 @@
       "128": "logo-small.png"
     },
     "permissions": [
-      "activeTab" 
+      "activeTab",
+      "http://localhost:8000" 
   ]
   }
