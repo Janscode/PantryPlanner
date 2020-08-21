@@ -1,3 +1,5 @@
+/*global chrome*/
+
 function extractLdJson(){
     /*
     searchs the dom for a ld_json script object and retreives the object if it exists
@@ -43,5 +45,13 @@ function searchJson(data, name){
    return {};
 }
 
+var ld_json = extractLdJson()
+var recipe = {
+                name: ld_json.name,
+                author: searchJson("author").name,
+                recipeIngredient: searchJson(ld_json, "recipeIngredient")
+            };
 
-console.log(searchJson(extractLdJson(), "recipeIngredient"));
+console.log(recipe);
+
+chrome.runtime.sendMessage(recipe);
