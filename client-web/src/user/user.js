@@ -33,7 +33,6 @@ export default class User extends Component {
     }
 
     receiveCookbook = (response) => {
-        this.state.cookbookJson = response.data;
         this.setState({
             cookbookJson: response.data,
             showCookbook: true,

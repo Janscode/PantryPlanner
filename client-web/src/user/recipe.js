@@ -1,4 +1,4 @@
-import React, {Componen, Component} from 'react';
+import React, {Component} from 'react';
 import Axios from 'axios';
 
 export default class Recipe extends Component{

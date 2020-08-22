@@ -1,4 +1,4 @@
-import React, {Componen, Component} from 'react';
+import React, {Component} from 'react';
 import Recipe from './recipe'
 
 
@@ -9,7 +9,10 @@ export default class Cookbook extends Component{
     );
         
         return(
-            recipeList
+            <>
+            <h1>Your Recipes:</h1>
+            {recipeList}
+            </>
         );
     }
 }

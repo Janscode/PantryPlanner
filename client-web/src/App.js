@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 import Driver from './driver/driver';
 import User from './user/user';
 
