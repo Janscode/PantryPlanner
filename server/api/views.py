@@ -33,10 +33,11 @@ def getRecipeList(request):
     recipeList = Recipe.objects.filter(user_name=user)
     response = {"recipes" : []}
     for recipe in recipeList:
-        recipeJson = {"name":recipe.recipe_name, "recipeIngredients":[]}
-        recipeIngredient = [item for item in (Ingredient.objects.filter(recipe_name=recipe))]
-        addIngredient = map(lambda i: recipeJson["recipeIngredients"].append(i.ingredient_text), recipeIngredient)
-        list(addIngredient)
+        name = recipe.recipe_name
+        recipeId = recipe.primary_key
+        ingredientList = Ingredient.objects.filter(recipe_name=recipe)
+        ingredientJsons = [{"id":i.primary_key, "text":i.ingredient_text} for i in ingredientList]
+        recipeJson = {"id":recipeId, "name":recipe.recipe_name, "recipeIngredient":ingredientJsons}
         response["recipes"].append(recipeJson)
     return JsonResponse(response)
 
