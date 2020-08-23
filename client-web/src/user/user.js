@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import Menu from './menu'
 import Login from './login'
 import Cookbook from './cookbook'
-import Pantry from './pantry'
+import Shoppinglist from './shoppinglist'
 import axios from 'axios';
 
 export default class User extends Component {
     state = {
         name: '',
         loggedIn: false,
-        cookbook: false,
-        pantry: false
+        showCookbook: false,
+        showShoppinglist: false
     }
     
     login = (name) => {
@@ -25,9 +25,7 @@ export default class User extends Component {
             name: '',
             loggedIn: false,
             showCookbook: false,
-            showPantry: false,
-            cookbookJson: {},
-            pantryJson: {}
+            showShoppinglist: false,
         });
         this.props.logout();
     }
@@ -36,7 +34,7 @@ export default class User extends Component {
         this.setState({
             cookbookJson: response.data,
             showCookbook: true,
-            showPantry: false
+            showShoppinglist: false
         });
     }
 
@@ -55,12 +53,12 @@ export default class User extends Component {
           });
     }
 
-    receivePantry = (response) => {
+    receiveShoppinglist = (response) => {
         console.log(response);
     } 
-    getPantry = () =>{
+    getShoppinglist = () =>{
         this.setState({
-            showPantry: true,
+            showShoppinglist: true,
             showCookbook: false
         })
     }
@@ -74,8 +72,8 @@ export default class User extends Component {
         else {
             return(
             <>
-            <Menu logout={this.logout} getPantry={this.getPantry} getCookbook={this.getCookbook}/>
-            {this.state.showPantry ? <Pantry pantryJson={this.state.pantryJson} username={this.state.name}/> : null}
+            <Menu logout={this.logout} getShoppinglist={this.getShoppinglist} getCookbook={this.getCookbook}/>
+            {this.state.showShoppinglist ? <Shoppinglist username={this.state.name}/> : null}
             {this.state.showCookbook ? <Cookbook cookbookJson={this.state.cookbookJson}  username={this.state.name}/> : null}
             </>
             );
