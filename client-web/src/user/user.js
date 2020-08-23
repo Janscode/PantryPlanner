@@ -75,8 +75,8 @@ export default class User extends Component {
             return(
             <>
             <Menu logout={this.logout} getPantry={this.getPantry} getCookbook={this.getCookbook}/>
-            {this.state.showPantry ? <Pantry pantryJson={this.state.pantryJson} username={this.props.name}/> : null}
-            {this.state.showCookbook ? <Cookbook cookbookJson={this.state.cookbookJson}  username={this.props.name}/> : null}
+            {this.state.showPantry ? <Pantry pantryJson={this.state.pantryJson} username={this.state.name}/> : null}
+            {this.state.showCookbook ? <Cookbook cookbookJson={this.state.cookbookJson}  username={this.state.name}/> : null}
             </>
             );
         }  
