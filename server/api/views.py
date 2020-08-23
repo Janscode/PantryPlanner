@@ -31,8 +31,8 @@ def saveRecipe(request):
 
 @csrf_exempt
 def orderRecipe(request):
-    username = request.Post['username']
-    recipeId = request.Post['id']
+    username = request.POST['username']
+    recipeId = request.POST['id']
     user = User.objects.get(user_name=username)
     user.order_set.create(recipe_name=recipeId)
 
