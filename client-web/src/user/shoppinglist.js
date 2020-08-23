@@ -32,13 +32,13 @@ export default class Shoppinglist extends Component{
     }
     render(){
         const pendingOrdersList = this.state.pendingOrders.map((order) =>
-        <li key={order.name}><Order order={order} /></li>
+        <li key={order.id}><Order order={order} /></li>
         );
         const deliveredOrdersList = this.state.deliveredOrders.map((order) =>
-        <li key={order.name}><Order order={order}/></li>
+        <li key={order.id}><Order order={order}/></li>
         );
         const ingredientList = this.state.ingredientList.map((ingredient) =>
-            <li key={ingredient}>{ingredient}</li>
+            <li key={ingredient.id}>{ingredient.text}</li>
         );
         
         
