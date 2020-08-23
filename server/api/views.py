@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import User, Recipe, Ingredient
+from .models import User, Driver, Recipe, Ingredient, Order 
 
 import json
 
@@ -49,9 +49,9 @@ def getOrderList(request):
     for order in orderList:
         orderJson = {"name":order.recipe.recipe_name}
         if order.completed:
-            response["ordersDelivered"].append(order)
+            response["ordersDelivered"].append(orderJson)
         else:
-            response["ordersPending"].append(order)
+            response["ordersPending"].append(orderJson)
     return JsonResponse(response)
 
 @csrf_exempt
