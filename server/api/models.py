@@ -8,7 +8,7 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
 
-class Driver(model.Model):
+class Driver(models.Model):
     driver_name = models.CharField(max_length=200)
 
 class Recipe(models.Model):
@@ -26,7 +26,7 @@ class Order(models.Model):
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     completed = models.BooleanField()
-    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, blank=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
 
     
 
