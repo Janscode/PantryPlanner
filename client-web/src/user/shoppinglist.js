@@ -9,6 +9,16 @@ export default class Shoppinglist extends Component{
         deliveredOrders: [],
         ingredientList: []
     }
+
+    removeOrder(id) {
+        newOrders = this.state.pendingOrders.filter(
+            (item) => item.id !==id
+        );
+        this.setState({
+            pendingOrders: newOrders
+        });
+    }
+
     componentDidMount() {
         var formBody = new FormData();
         formBody.append("username", this.props.username);
@@ -33,7 +43,7 @@ export default class Shoppinglist extends Component{
     }
     render(){
         const pendingOrdersList = this.state.pendingOrders.map((order) =>
-        <li key={order.id}><Order order={order} username={this.props.username}/></li>
+        <li key={order.id}><Order remove={this.removeOrder} order={order} username={this.props.username}/></li>
         );
         const deliveredOrdersList = this.state.deliveredOrders.map((order) =>
         <li key={order.id}><Delivery order={order} username={this.props.username}/></li>
