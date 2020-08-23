@@ -3,7 +3,11 @@ import Order from './order'
 import Axios from 'axios';
 
 export default class Shoppinglist extends Component{
-    state = {}
+    state = {
+        pendingOrders: [],
+        deliveredOrders: [],
+        ingredientList: []
+    }
     componentDidMount() {
         var formBody = new FormData();
         formBody.append("username", this.props.username);
@@ -14,22 +18,30 @@ export default class Shoppinglist extends Component{
             headers: {'Content-Type': 'multipart/form-data' }
         })
         .then((response) => {
+            console.log(response)
             this.setState({
-                ordersPending: response.ordersPending,
-                ordersDelivered: response.ordersDelivered
+                pendingOrders: response.data.pendingOrders,
+                deliveredOrders: response.data.deliveredOrders,
+                ingredientList: response.data.ingredientList
             });
+            
         })
         .catch((error) =>{
             console.log(error)
         });
     }
     render(){
-        const ordersPendingList = this.state.ordersPending.map((order) =>
-            <li><Order order={order}/></li>
-        )
+        const pendingOrdersList = this.state.pendingOrders.map((order) =>
+        <li><Order order={order}/></li>
+        );
+        
+        
+        
         return(
+            <>
             <h1>this is a Pantry </h1>
-
+            {pendingOrdersList}
+            </>
         );
     }
 }
