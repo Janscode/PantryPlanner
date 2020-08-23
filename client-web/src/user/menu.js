@@ -14,8 +14,8 @@ export default function SimpleMenu(props) {
     setAnchorEl(null);
   };
 
-  const pantryClick = (event) => {
-    props.getPantry ();
+  const shoppingListClick = (event) => {
+    props.getShoppinglist ();
     handleClick(event);
     handleClose();
   }
@@ -38,7 +38,7 @@ export default function SimpleMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={pantryClick}>Pantry</MenuItem>
+        <MenuItem onClick={shoppingListClick}>Pantry</MenuItem>
         <MenuItem onClick={cookbookClick}>Cookbook</MenuItem>
         <MenuItem onClick={props.logout}>Logout</MenuItem>
       </Menu>
