@@ -69,3 +69,9 @@ def getOrderList(request):
 @csrf_exempt
 def getDelivery(request):
     pass
+
+@csrf_exempt
+def cancelOrder(request):
+    orderId = request.POST["id"]
+    Order.objects.get(pk=orderId).delete()
+    return HttpResponse("Deleted order")
