@@ -5,7 +5,12 @@ export default function Delivery(props) {
     const order = props.order;
     return(
         <>
-        <Recipe recipe={{name: order.name, recipeIngredient: order.recipeIngredient}}/>
+        <Recipe 
+        recipe={{
+            name: order.name, 
+            recipeIngredient: order.recipeIngredient}}
+        username={this.props.username}
+        />
         </>
     )
 }
