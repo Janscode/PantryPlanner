@@ -4,8 +4,9 @@ import Button from '@material-ui/core/Button';
 
 export default function Order(props) {
     const cancelOrder = () => {
+        const id = props.order.id;
         var formBody = new FormData();
-        formBody.append("id", props.order.id);
+        formBody.append("id", id);
         Axios({
             method: "POST",
             url: "/api/cancelOrder",
@@ -18,11 +19,11 @@ export default function Order(props) {
         .catch(
             (error) => console.log(error)
         );
-        props.remove();
+        props.remove(id)
     }
     return(
         <div>
-            {props.order.recipe.name} <Button onClick={orderOrder}> Cancel Order </Button>
+            {props.order.recipe.name} <Button onClick={cancelOrder}> Cancel Order </Button>
         </div>
     );
 }

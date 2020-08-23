@@ -10,12 +10,21 @@ export default class Shoppinglist extends Component{
         ingredientList: []
     }
 
-    removeOrder(id) {
-        newOrders = this.state.pendingOrders.filter(
+    removeOrder = (id) => {
+        var newOrders = this.state.pendingOrders.filter(
             (item) => item.id !==id
         );
         this.setState({
             pendingOrders: newOrders
+        });
+    }
+    
+    addOrder = (id, recipe) => {
+        var newOrders = this.state.pendingOrders.concat(
+            {id: id, recipe: recipe}
+        );
+        this.setState({
+            pendingOrdersList: newOrders
         });
     }
 
