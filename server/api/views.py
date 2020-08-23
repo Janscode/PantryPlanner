@@ -45,13 +45,16 @@ def getOrderList(request):
     username = request.POST['username']
     user = User.objects.get(user_name=username)
     orderList = Order.objects.filter(user_name=user)
-    response = {"ordersPending" : [], "ordersDelivered" : []}
+    response = {"pendingOrders" : [], "deliveredOrders" : [], "ingredientList": []}
     for order in orderList:
-        orderJson = {"name":order.recipe.recipe_name}
+        name = Recipe.orderJson
+        ingredientList = Ingredient.objects.filter(recipe_name=name)
+        orderJson = {"name":name, "recipeIngredient":[i.ingredient_text for i in ingredientList]}
         if order.completed:
-            response["ordersDelivered"].append(orderJson)
+            response["pendingOrders"].append(orderJson)
         else:
-            response["ordersPending"].append(orderJson)
+            response["deliveredOrders"].append(orderJson)
+            response["ingredientList"] += orderJson["recipeIngredient"]
     return JsonResponse(response)
 
 @csrf_exempt
