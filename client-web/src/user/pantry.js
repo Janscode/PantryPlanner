@@ -8,7 +8,7 @@ export default class Pantry extends Component{
         formBody.append("username", this.props.username);
         Axios({
             method: "POST",
-            url: "/api/getPantry",
+            url: "/api/getOrderList",
             data: formBody,
             headers: {'Content-Type': 'multipart/form-data' }
         })
@@ -21,7 +21,8 @@ export default class Pantry extends Component{
     }
     render(){
         return(
-            <h1>this is a Pantry</h1>
+            <h1>this is a Pantry </h1>
+
         );
     }
 }
