@@ -5,7 +5,7 @@ export default class Order extends Component{
     render(){
         return(
             <div>
-                {this.props.order.name} <Button> Cancel Order </Button>
+                {this.props.order.recipe.name} <Button> Cancel Order </Button>
             </div>
         );
     }
