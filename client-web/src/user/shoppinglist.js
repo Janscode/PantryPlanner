@@ -33,10 +33,10 @@ export default class Shoppinglist extends Component{
     }
     render(){
         const pendingOrdersList = this.state.pendingOrders.map((order) =>
-        <li key={order.id}><Order order={order} /></li>
+        <li key={order.id}><Order order={order} username={this.props.username}/></li>
         );
         const deliveredOrdersList = this.state.deliveredOrders.map((order) =>
-        <li key={order.id}><Delivery order={order}/></li>
+        <li key={order.id}><Delivery order={order} username={this.props.username}/></li>
         );
         const ingredientList = this.state.ingredientList.map((ingredient) =>
             <li key={ingredient.id}>{ingredient.text}</li>
