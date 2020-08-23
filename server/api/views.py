@@ -26,7 +26,8 @@ def saveRecipe(request):
         u = User.objects.get(user_name=requestJson["username"])
         r = u.recipe_set.create(recipe_name=requestJson["recipe"]["name"])
         for ingredient in requestJson["recipe"]["recipeIngredient"]:
-            r.ingredient_set.create(ingredient_text=ingredient)
+            ingredient = r.ingredient_set.create(ingredient_text=ingredient)
+            ingredient.save()
     return HttpResponse("didn't make it")
 
 @csrf_exempt
@@ -35,8 +36,10 @@ def orderRecipe(request):
     recipeId = request.POST['id']
     user = User.objects.get(user_name=username)
     recipe = Recipe.objects.get(pk=recipeId)
-    user.order_set.create(recipe=recipe)
-    return HttpResponse("Ordered Recipe")
+    order = user.order_set.create(recipe=recipe)
+    order.save()
+    orderId = order.id
+    return JsonResponse({"id":orderId})
 
 @csrf_exempt
 def getRecipeList(request):
