@@ -6,3 +6,4 @@ env
 *pycache
 *.pyc
 server/db.sqlite3
+server/api/migrations
