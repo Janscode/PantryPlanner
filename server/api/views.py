@@ -29,7 +29,6 @@ def orderRecipe(request):
 @csrf_exempt
 def getRecipeList(request):
     username = request.POST['username']
-    print(username)
     user = User.objects.get(user_name=username)
     recipeList = Recipe.objects.filter(user_name=user)
     response = {"recipes" : []}
@@ -39,6 +38,20 @@ def getRecipeList(request):
         addIngredient = map(lambda i: recipeJson["recipeIngredients"].append(i.ingredient_text), recipeIngredient)
         list(addIngredient)
         response["recipes"].append(recipeJson)
+    return JsonResponse(response)
+
+@csrf_exempt
+def getOrderList(request):
+    username = request.POST['username']
+    user = User.objects.get(user_name=username)
+    orderList = Order.objects.filter(user_name=user)
+    response = {"ordersPending" : [], "ordersDelivered" : []}
+    for order in orderList:
+        orderJson = {"name":order.recipe.recipe_name}
+        if order.completed:
+            response["ordersDelivered"].append(order)
+        else:
+            response["ordersPending"].append(order)
     return JsonResponse(response)
 
 @csrf_exempt
