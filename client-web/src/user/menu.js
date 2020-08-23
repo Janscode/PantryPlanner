@@ -29,7 +29,7 @@ export default function SimpleMenu(props) {
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        Open Menu
+        Menu
       </Button>
       <Menu
         id="simple-menu"
@@ -38,7 +38,7 @@ export default function SimpleMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={shoppingListClick}>Pantry</MenuItem>
+        <MenuItem onClick={shoppingListClick}>ShoppingList</MenuItem>
         <MenuItem onClick={cookbookClick}>Cookbook</MenuItem>
         <MenuItem onClick={props.logout}>Logout</MenuItem>
       </Menu>
