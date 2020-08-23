@@ -34,9 +34,9 @@ def getRecipeList(request):
     response = {"recipes" : []}
     for recipe in recipeList:
         name = recipe.recipe_name
-        recipeId = recipe.primary_key
+        recipeId = recipe.id
         ingredientList = Ingredient.objects.filter(recipe_name=recipe)
-        ingredientJsons = [{"id":i.primary_key, "text":i.ingredient_text} for i in ingredientList]
+        ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
         recipeJson = {"id":recipeId, "name":recipe.recipe_name, "recipeIngredient":ingredientJsons}
         response["recipes"].append(recipeJson)
     return JsonResponse(response)
@@ -50,9 +50,9 @@ def getOrderList(request):
     for order in orderList:
         recipe = order.recipe
         name = recipe.recipe_name
-        orderId = order.primary_key
+        orderId = order.id
         ingredientList = Ingredient.objects.filter(recipe_name=recipe)
-        ingredientJsons = [{"id":i.primary_key, "text":i.ingredient_text} for i in ingredientList]
+        ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
         orderJson = {"id":orderId, "name":name,"recipeIngredient":ingredientJsons}
         if order.completed:
             response["deliveredOrders"].append(orderJson)
