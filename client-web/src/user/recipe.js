@@ -16,11 +16,11 @@ export default class Recipe extends Component{
 
     render() {
         const recipe = this.props.recipe;
-
+        const orderText = this.props.cookbook ? "order" : "order \n again";
         return(
             <div>
                 <h1> {recipe.name} </h1>
-                <button onClick={this.orderRecipe}>order</button>
+                <button onClick={this.orderRecipe}>{orderText}</button>
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Order from './order'
 import Axios from 'axios';
+import Order from './order';
+import Delivery from './delivery';
 
 export default class Shoppinglist extends Component{
     state = {
@@ -35,7 +36,7 @@ export default class Shoppinglist extends Component{
         <li key={order.id}><Order order={order} /></li>
         );
         const deliveredOrdersList = this.state.deliveredOrders.map((order) =>
-        <li key={order.id}><Order order={order}/></li>
+        <li key={order.id}><Delivery order={order}/></li>
         );
         const ingredientList = this.state.ingredientList.map((ingredient) =>
             <li key={ingredient.id}>{ingredient.text}</li>
