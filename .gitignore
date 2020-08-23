@@ -5,4 +5,4 @@ env
 .vscode
 *pycache
 *.pyc
-*sqlite3
+server/db.sqlite3
