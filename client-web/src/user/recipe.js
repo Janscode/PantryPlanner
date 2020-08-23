@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Axios from 'axios';
+import Button from '@material-ui/core/Button'
 
 export default class Recipe extends Component{
     orderRecipe = () => {
@@ -19,8 +20,7 @@ export default class Recipe extends Component{
         const orderText = this.props.cookbook ? "order" : "order \n again";
         return(
             <div>
-                <h1> {recipe.name} </h1>
-                <button onClick={this.orderRecipe}>{orderText}</button>
+                {recipe.name} <Button onClick={this.orderRecipe}>{orderText}</Button>
             </div>
         );
     }
