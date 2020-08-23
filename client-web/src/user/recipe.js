@@ -19,7 +19,7 @@ export default class Recipe extends Component{
         const recipe = this.props.recipe;
         return(
             <div>
-                {recipe.name} <Button onClick={this.orderRecipe}>{this.orderText}</Button>
+                {recipe.name} <Button onClick={this.orderRecipe}>{this.props.orderText}</Button>
             </div>
         );
     }
