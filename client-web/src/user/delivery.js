@@ -11,7 +11,7 @@ export default function Delivery(props) {
             recipeIngredient: order.recipeIngredient}}
         username={this.props.username} 
         ordertext="order again" 
-        key={recipe.id}
+        key={order.id}
         />
         </>
     )
