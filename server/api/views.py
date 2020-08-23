@@ -47,13 +47,13 @@ def getOrderList(request):
     orderList = Order.objects.filter(user_name=user)
     response = {"pendingOrders" : [], "deliveredOrders" : [], "ingredientList": []}
     for order in orderList:
-        name = Recipe.orderJson
-        ingredientList = Ingredient.objects.filter(recipe_name=name)
+        name = order.recipe.recipe_name
+        ingredientList = Ingredient.objects.filter(recipe_name=order.recipe)
         orderJson = {"name":name, "recipeIngredient":[i.ingredient_text for i in ingredientList]}
         if order.completed:
-            response["pendingOrders"].append(orderJson)
-        else:
             response["deliveredOrders"].append(orderJson)
+        else:
+            response["pendingOrders"].append(orderJson)
             response["ingredientList"] += orderJson["recipeIngredient"]
     return JsonResponse(response)
 
