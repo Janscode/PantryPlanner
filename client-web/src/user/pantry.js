@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 
 export default class Pantry extends Component{
+    state = {}
     componentDidMount() {
-        formBody = new FormData();
-
-        Axios(
-            this.props.username
-        )
+        var formBody = new FormData();
+        formBody.append("username", this.props.username);
+        Axios({
+            method: "POST",
+            url: "/api/getPantry",
+            data: formBody,
+            headers: {'Content-Type': 'multipart/form-data' }
+        })
         .then((response) => {
             console.log(response)
-        });
+        })
         .catch((error) =>{
             console.log(error)
         });
