@@ -17,10 +17,9 @@ export default class Recipe extends Component{
 
     render() {
         const recipe = this.props.recipe;
-        const orderText = this.props.cookbook ? "order" : "order \n again";
         return(
             <div>
-                {recipe.name} <Button onClick={this.orderRecipe}>{orderText}</Button>
+                {recipe.name} <Button onClick={this.orderRecipe}>{this.orderText}</Button>
             </div>
         );
     }
