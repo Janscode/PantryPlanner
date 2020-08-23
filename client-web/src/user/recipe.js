@@ -6,7 +6,7 @@ export default class Recipe extends Component{
     orderRecipe = () => {
         var formBody = new FormData();
         formBody.append('username', this.props.username);
-        formBody.append('recipeId', this.props.id);
+        formBody.append('id', this.props.recipe.id);
         Axios({
             method: "POST",
             url: '/api/orderRecipe',
