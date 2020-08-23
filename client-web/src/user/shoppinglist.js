@@ -46,6 +46,7 @@ export default class Shoppinglist extends Component{
         return(
             <>
             <h1>Shopping List</h1>
+            {ingredientList}
             Recipe Orders:
             {pendingOrdersList}
             Past Deliveries
