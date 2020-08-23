@@ -29,7 +29,7 @@ class Ingredient(models.Model):
 class Order(models.Model):
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    completed = models.BooleanField()
+    completed = models.BooleanField(default=False)
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, blank=True, null=True)
     
     

@@ -34,7 +34,9 @@ def orderRecipe(request):
     username = request.POST['username']
     recipeId = request.POST['id']
     user = User.objects.get(user_name=username)
-    user.order_set.create(recipe_name=recipeId)
+    recipe = Recipe.objects.get(pk=recipeId)
+    user.order_set.create(recipe=recipe)
+    return HttpResponse("Ordered Recipe")
 
 @csrf_exempt
 def getRecipeList(request):
