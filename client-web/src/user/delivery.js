@@ -6,12 +6,9 @@ export default function Delivery(props) {
     return(
         <>
         <Recipe 
-        recipe={{
-            name: order.name, 
-            recipeIngredient: order.recipeIngredient}}
+        recipe={props.order.recipe} 
         username={props.username} 
         orderText="order again" 
-        key={order.id}
         />
         </>
     )
