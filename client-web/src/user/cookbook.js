@@ -9,7 +9,7 @@ export default class Cookbook extends Component{
         recipe={recipe} 
         username={this.props.username} 
         key={recipe.id} 
-        ordertext="order"
+        orderText="order"
         />
     );
         
