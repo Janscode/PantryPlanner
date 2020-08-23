@@ -7,6 +7,13 @@ import json
 
 # Put the logging info within your django view
 
+def recipeToJson(recipe):
+    recipeName = recipe.recipe_name
+    recipeId = recipe.id
+    ingredientList = Ingredient.objects.filter(recipe_name=recipe)
+    ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
+    recipeJson = {"id":recipeId, "name":recipeName, "recipeIngredient":ingredientJsons}
+    return recipeJson
 
 def index(request):
     u = User.objects.get(pk=1)
@@ -24,7 +31,10 @@ def saveRecipe(request):
 
 @csrf_exempt
 def orderRecipe(request):
-    pass
+    username = request.Post['username']
+    recipeId = request.Post['id']
+    user = User.objects.get(user_name=username)
+    user.order_set.create(recipe_name=recipeId)
 
 @csrf_exempt
 def getRecipeList(request):
@@ -33,12 +43,7 @@ def getRecipeList(request):
     recipeList = Recipe.objects.filter(user_name=user)
     response = {"recipes" : []}
     for recipe in recipeList:
-        name = recipe.recipe_name
-        recipeId = recipe.id
-        ingredientList = Ingredient.objects.filter(recipe_name=recipe)
-        ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
-        recipeJson = {"id":recipeId, "name":recipe.recipe_name, "recipeIngredient":ingredientJsons}
-        response["recipes"].append(recipeJson)
+        response["recipes"].append(recipeToJson(recipe))
     return JsonResponse(response)
 
 @csrf_exempt
@@ -48,17 +53,15 @@ def getOrderList(request):
     orderList = Order.objects.filter(user_name=user)
     response = {"pendingOrders" : [], "deliveredOrders" : [], "ingredientList": []}
     for order in orderList:
-        recipe = order.recipe
-        name = recipe.recipe_name
         orderId = order.id
-        ingredientList = Ingredient.objects.filter(recipe_name=recipe)
-        ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
-        orderJson = {"id":orderId, "name":name,"recipeIngredient":ingredientJsons}
+        recipe = order.recipe
+        recipeJson = recipeToJson(recipe)
+        orderJson = {"id":orderId, "recipe":recipeJson}
         if order.completed:
             response["deliveredOrders"].append(orderJson)
         else:
             response["pendingOrders"].append(orderJson)
-            response["ingredientList"] += orderJson["recipeIngredient"]
+            response["ingredientList"] += orderJson["recipe"]["recipeIngredient"]
     return JsonResponse(response)
 
 @csrf_exempt
