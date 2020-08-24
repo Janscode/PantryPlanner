@@ -23,11 +23,14 @@ export default class RecipeView extends Component {
     }
 
     saveRecipe = () => {
-        console.log(this.state.recipe)
+        var formBody = new FormData();
         axios({
             method: 'post',
             url: 'http://localhost:8000/api/saveRecipe',
-            data: {"username": "placeholer", 'recipe' : this.props.recipe},
+            data: {
+                username: this.props.username, 
+                recipe: this.state.recipe
+            },
             headers: {'Content-Type': 'multipart/form-data'}
         });
         this.props.toggle()
