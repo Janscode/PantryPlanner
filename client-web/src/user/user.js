@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Menu from './menu'
-import Login from './login'
+import Login from '../login'
 import Cookbook from './cookbook'
 import Shoppinglist from './shoppinglist'
 import axios from 'axios';
