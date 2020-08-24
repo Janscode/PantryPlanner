@@ -59,7 +59,7 @@ def getRecipeList(request):
 def getOrderList(request):
     username = request.POST['username']
     user = User.objects.get(user_name=username)
-    orderList = Order.objects.filter(user_name=user).select_related("id", "recipe", "completed", "driver")
+    orderList = Order.objects.filter(user_name=user).select_related("recipe","driver")
     response = {"pendingOrders" : [], "deliveredOrders" : [], "ingredientList": []}
     for order in orderList:
         orderId = order.id
