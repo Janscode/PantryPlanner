@@ -75,7 +75,35 @@ def getOrderList(request):
 
 @csrf_exempt
 def getDelivery(request):
-    pass
+    driver_name = request.POST["driver"]
+    driver = Driver.objects.get(driver_name=driver_name)
+    driverOrders = Order.objects.select_related('user_name').filter(driver=driver)
+    priorityUsers = set()
+    for order in driverOrders:
+        priorityUsers.add(order.user_name)
+    for user in priorityUsers:
+        userOrders= Order.objects.filter(user_name=user, completed=False)
+        deliveryJson = {"username":user.user_name, "orderList":[], "ingredientList":[]}
+        for userOrder in userOrders:
+            orderId = userOrder.id
+            recipe = userOrder.recipe
+            recipeJson = recipeToJson(recipe)
+            deliveryJson["ingredientList"] += recipeJson["recipeIngredient"]
+            deliveryJson["orderList"].append(orderId)
+        if not deliveryJson["orderList"] == []:
+            return(JsonResponse(deliveryJson))
+    for user in User.objects.all():
+        userOrders= Order.objects.filter(user_name=user, completed=False)
+        deliveryJson = {"username":user.user_name, "orderList":[], "ingredientList":[]}
+        for userOrder in userOrders:
+            orderId = userOrder.id
+            recipe = userOrder.recipe
+            recipeJson = recipeToJson(recipe)
+            deliveryJson["ingredientList"] += recipeJson["recipeIngredient"]
+            deliveryJson["orderList"].append(orderId)
+        if not deliveryJson["orderList"] == []:
+            return(JsonResponse(deliveryJson))
+
 
 @csrf_exempt
 def cancelOrder(request):
