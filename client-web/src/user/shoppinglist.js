@@ -26,16 +26,19 @@ export default class Shoppinglist extends Component{
     }
     
     addOrder = (id, recipe) => {
+        
         var newOrders = this.state.pendingOrders.concat(
             {id: id, recipe: recipe}
         );
+
+        console.log(newOrders)
+
         this.setState({
-            pendingOrdersList: newOrders
+            pendingOrders: newOrders
         });
     }
 
     componentDidMount() {
-        console.log("Made it")
         var formBody = new FormData();
         formBody.append("username", this.props.username);
         Axios({
@@ -58,25 +61,33 @@ export default class Shoppinglist extends Component{
         });
     }
     render(){
-        const pendingRow = (items) => ({index}) => {
+        const pendingRow = (items) => ({index, style}) => {
             const order = items[index];
-            return(<Order key={order.id} remove={this.removeOrder} order={order} username={this.props.username}/>);
+            return(
+                 <div style={style}>
+                     <Order key={order.id} remove={this.removeOrder} order={order} username={this.props.username}/>
+                </div>
+            );
         };
 
-        const deliveredRow  = (items) => ({index}) => {
+        const deliveredRow  = (items) => ({index, style}) => {
             const order = items[index];
-            const color = "";
+            let color = "";
             if (index % 2){
                 color = "white"
             }
-            return(<Delivery key={order.id} order={order} add={this.addOrder} username={this.props.username} />);
+            return(
+            <div style={style}>
+                <Delivery key={order.id} order={order} add={this.addOrder} username={this.props.username} color={color}/>
+            </div>
+            );
         };
 
         const ingredientRow = (items) => ({index, style}) => {
             const ingredient = items[index];
             return (
-            <div style={{height:60, fontSize:"120%"}}>
-                <li key={items[index].orderId + "/" + items[index].id}>{items[index].text}</li>
+            <div key={ingredient.orderId + "/" + ingredient.id} style={style}>
+                <li >{ingredient.text}</li>
             </div>
             );
         }
@@ -91,7 +102,7 @@ export default class Shoppinglist extends Component{
                         <List
                          items={this.state.ingredientList}
                          rowComponent={ingredientRow} 
-                         height={500}
+                         height={600}
                          width={500}/>
                         
                     </Box>
