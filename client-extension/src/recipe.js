@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 /*global chrome*/
 
 export default class RecipeView extends Component {
@@ -10,7 +11,8 @@ export default class RecipeView extends Component {
         chrome.tabs.executeScript({file : "/content.js"});
         chrome.runtime.onMessage.addListener(
             (recipe) => {
-                if (recipe.recipeIngredient !== null){
+                if (Object.keys(recipe.recipeIngredient).length !== 0){
+                    console.log(recipe);
                     this.setState({
                         recipe: recipe,
                         gotRecipe: true
@@ -36,7 +38,7 @@ export default class RecipeView extends Component {
             return(
                 <div>
                     <h2>Recipe not found!</h2>
-                    <button color="red" onClick={this.props.toggle}>exit</button>
+                    <Button color="red" onClick={this.props.toggle}>exit</Button>
                 </div>
             )
         }
@@ -48,8 +50,8 @@ export default class RecipeView extends Component {
             <div>
                 <h1>{recipe.name}</h1>
                     <ul>{ingredientList}</ul>
-                <button onClick={this.saveRecipe}>Save Recipe</button> 
-                <button color="red" onClick={this.props.toggle}>exit</button>
+                <Button onClick={this.saveRecipe} color="primary">Save Recipe</Button> 
+                <Button color="secondary" onClick={this.props.toggle}>exit</Button>
             </div>
         );
     }
