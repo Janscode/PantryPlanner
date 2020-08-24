@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Recipe from './recipe';
+import Recipe from './recipeCard';
 import Axios from 'axios';
 
 

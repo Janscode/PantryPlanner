@@ -11,11 +11,12 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Axios from 'axios';
 
-/* credit https://material-ui.com/components/cards/ */
+
+/* credit https://material-ui.com/components/cards/*/
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,19 @@ export default function RecipeReviewCard(props) {
     setExpanded(!expanded);
   };
 
+  const orderRecipe = () => {
+    var formBody = new FormData();
+    formBody.append('username', props.username);
+    formBody.append('id', props.recipe.id);
+    Axios({
+        method: "POST",
+        url: '/api/orderRecipe',
+        data: formBody,
+        headers: {'Content-Type': 'multipart/form-data' } 
+    });
+  };
+  console.log(props.recipe);
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -59,17 +73,19 @@ export default function RecipeReviewCard(props) {
         title="Shrimp and Chorizo Paella"
         subheader=""
       />
-      <CardMedia
+      {props.recipe.img ?
+        <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        src={props.recipe.img}
         title="Paella dish"
       />
+      :
+        null
+      }
+      
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        <IconButton onClick={orderRecipe} aria-label="add to favorites">
+          <AddShoppingCart />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -85,9 +101,9 @@ export default function RecipeReviewCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Ingredients:</Typography>
-          {props.ingredients.map(
+          {props.recipe.recipeIngredient.map(
             (ingredient) =>
-            <Typography paragraph>{ingredient}</Typography>
+            <li>{ingredient.text}</li>
           )}
         </CardContent>
       </Collapse>
