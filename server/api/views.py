@@ -111,9 +111,9 @@ def getPastDelivery(request):
     pastOrders = Order.objects.select_related('user_name').filter(driver=driver)
     userList = []
     for order in pastOrders:
-        userList.append(order.user_name)
+        userList.append(order.user_name.user_name)
     return(JsonResponse({"usernames":userList}))
-    
+
 @csrf_exempt
 def cancelOrder(request):
     orderId = request.POST["id"]
