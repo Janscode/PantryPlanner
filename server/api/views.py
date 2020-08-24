@@ -24,11 +24,9 @@ def index(request):
 @csrf_exempt
 def saveRecipe(request):
     if request.method == "POST":
-        
         requestJson = json.loads(request.body)
-        print(requestJson["username"])
         u = User.objects.get(user_name=requestJson["username"])
-        r = u.recipe_set.create(recipe_name=requestJson["recipe"]["name"])
+        r = u.recipe_set.create(recipe_name=requestJson["recipe"]["name"], author_name="placeholder")
         r.save()
         for ingredient in requestJson["recipe"]["recipeIngredient"]:
             ingredient = r.ingredient_set.create(ingredient_text=ingredient)
