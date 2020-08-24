@@ -7,11 +7,13 @@ import json
 
 # Put the logging info within your django view
 
-def recipeToJson(recipe):
+def recipeToJson(recipe, orderId=None):
     recipeName = recipe.recipe_name
     recipeId = recipe.id
     ingredientList = Ingredient.objects.filter(recipe_name=recipe)
     ingredientJsons = [{"id":i.id, "text":i.ingredient_text} for i in ingredientList]
+    if orderId:
+        [i.update({"orderId":orderId}) for i in ingredientJsons]
     recipeJson = {"id":recipeId, "name":recipeName, "recipeIngredient":ingredientJsons}
     return recipeJson
 
@@ -60,7 +62,7 @@ def getOrderList(request):
     for order in orderList:
         orderId = order.id
         recipe = order.recipe
-        recipeJson = recipeToJson(recipe)
+        recipeJson = recipeToJson(recipe, orderId)
         orderJson = {"id":orderId, "recipe":recipeJson}
         if order.completed:
             response["deliveredOrders"].append(orderJson)

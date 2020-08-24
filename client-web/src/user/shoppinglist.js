@@ -12,10 +12,14 @@ export default class Shoppinglist extends Component{
 
     removeOrder = (id) => {
         var newOrders = this.state.pendingOrders.filter(
-            (item) => item.id !==id
+            (order) => order.id !==id
+        );
+        var newIngredients = this.state.ingredientList.filter(
+            (ingredient) => ingredient.orderId !== id
         );
         this.setState({
-            pendingOrders: newOrders
+            pendingOrders: newOrders,
+            ingredientList: newIngredients
         });
     }
     
@@ -58,7 +62,7 @@ export default class Shoppinglist extends Component{
         <li key={order.id}><Delivery order={order} username={this.props.username}/></li>
         );
         const ingredientList = this.state.ingredientList.map((ingredient) =>
-            <li key={ingredient.id}>{ingredient.text}</li>
+            <li key={ingredient.orderId + "/" + ingredient.id}>{ingredient.text}</li>
         );
         
         
