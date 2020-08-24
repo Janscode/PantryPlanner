@@ -1,82 +1,72 @@
 import React, {Component} from 'react';
-import Menu from './menu'
 import Login from '../login'
 import Cookbook from './cookbook'
+import Sidebar from '../sidebar'
 import Shoppinglist from './shoppinglist'
-import axios from 'axios';
+
 
 export default class User extends Component {
     state = {
         name: '',
-        loggedIn: false,
-        showCookbook: false,
-        showShoppinglist: false
+        page: 'login'
     }
     
     login = (name) => {
         this.setState({
             name: name,
-            loggedIn: true
+            page: 'shoppingList'
         });
     }
 
     logout = () => {
         this.setState({
             name: '',
-            loggedIn: false,
-            showCookbook: false,
-            showShoppinglist: false,
+            page: 'login'
         });
         this.props.logout();
     }
 
-    receiveCookbook = (response) => {
-        this.setState({
-            cookbookJson: response.data,
-            showCookbook: true,
-            showShoppinglist: false
-        });
-    }
-
     getCookbook = () =>{
-        var formBody = new FormData();
-        formBody.append("username", this.state.name);
-        axios({
-            method: 'POST',
-            url: '/api/getRecipeList',
-            data: formBody,
-            headers: {'Content-Type': 'multipart/form-data' }
-          })
-          .then(this.receiveCookbook)
-          .catch(function (response){
-              console.log(response);
-          });
+        this.setState({
+            page: "cookbook"
+        })
     }
 
-    receiveShoppinglist = (response) => {
-        console.log(response);
-    } 
     getShoppinglist = () =>{
         this.setState({
-            showShoppinglist: true,
-            showCookbook: false
+            page: "shoppingList"
         })
     }
     
     render(){
-        if (!this.state.loggedIn){
-            return(
-                <Login login={this.login}/>
-            );
+        let page = null;
+        let name = '';
+        switch(this.state.page){
+            case "login":
+                return(
+                    <Login login={this.login}/>
+                );
+            case "shoppingList":
+                page = <Shoppinglist username={this.state.name}/> ;
+                name = "Shopping List";
+                break;
+            case "cookbook":
+                page = <Cookbook username={this.state.name}/>;
+                name = "Cookbook";
+                break;
+            default:
+                break;
         }
-        else {
-            return(
+
+        const buttons = [
+            {text: "Shopping List", click: this.getShoppinglist},
+            {text: "Cookbook", click: this.getCookbook},
+            {text: "Log out", click: this.logout}
+        ]
+        return(
             <>
-            <Menu logout={this.logout} getShoppinglist={this.getShoppinglist} getCookbook={this.getCookbook}/>
-            {this.state.showShoppinglist ? <Shoppinglist username={this.state.name}/> : null}
-            {this.state.showCookbook ? <Cookbook cookbookJson={this.state.cookbookJson}  username={this.state.name}/> : null}
+            <Sidebar name={name} buttons={buttons} content={page} />
             </>
-            );
-        }  
-    }
+        );
+    }  
 }
