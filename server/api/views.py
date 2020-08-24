@@ -119,3 +119,16 @@ def cancelOrder(request):
     orderId = request.POST["id"]
     Order.objects.get(pk=orderId).delete()
     return HttpResponse("Deleted order")
+
+@csrf_exempt
+def completeOrder(request):
+    requestJson = json.loads(request.body)
+    orderList = requestJson["orderIds"]
+    driver_name = requestJson["driver"]
+    driver = Driver.objects.get(driver_name=driver_name)
+    for orderId in orderList:
+        order=Order.objects.get(pk=orderId)
+        order.completed = True
+        order.driver = driver
+        order.save()
+    return(HttpResponse("Thank"))
