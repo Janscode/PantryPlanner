@@ -59,7 +59,7 @@ def getRecipeList(request):
 def getOrderList(request):
     username = request.POST['username']
     user = User.objects.get(user_name=username)
-    orderList = Order.objects.filter(user_name=user)
+    orderList = Order.objects.filter(user_name=user).select_related("id", "recipe", "completed", "driver")
     response = {"pendingOrders" : [], "deliveredOrders" : [], "ingredientList": []}
     for order in orderList:
         orderId = order.id
@@ -67,6 +67,7 @@ def getOrderList(request):
         recipeJson = recipeToJson(recipe, orderId)
         orderJson = {"id":orderId, "recipe":recipeJson}
         if order.completed:
+            orderJson.update({"driver":order.driver.driver_name})
             response["deliveredOrders"].append(orderJson)
         else:
             response["pendingOrders"].append(orderJson)
