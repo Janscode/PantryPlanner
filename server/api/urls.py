@@ -9,5 +9,6 @@ urlpatterns = [
     path('getOrderList', views.getOrderList, name='get order list'),
     path('orderRecipe', views.orderRecipe, name='order recipe'),
     path('cancelOrder', views.cancelOrder, name='cancel order'),
-    path('getDelivery', views.getDelivery, name='get delivery')
+    path('getDelivery', views.getDelivery, name='get delivery'),
+    path('getPastDelivery', views.getPastDelivery, name='get past delivery')
 ]

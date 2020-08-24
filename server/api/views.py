@@ -104,7 +104,16 @@ def getDelivery(request):
         if not deliveryJson["orderList"] == []:
             return(JsonResponse(deliveryJson))
 
-
+@csrf_exempt
+def getPastDelivery(request):
+    driver_name = request.POST["driver"]
+    driver = Driver.objects.get(driver_name=driver_name)
+    pastOrders = Order.objects.select_related('user_name').filter(driver=driver)
+    userList = []
+    for order in pastOrders:
+        userList.append(order.user_name)
+    return(JsonResponse({"usernames":userList}))
+    
 @csrf_exempt
 def cancelOrder(request):
     orderId = request.POST["id"]
