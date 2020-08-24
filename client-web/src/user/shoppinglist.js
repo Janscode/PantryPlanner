@@ -65,6 +65,10 @@ export default class Shoppinglist extends Component{
 
         const deliveredRow  = (items) => ({index}) => {
             const order = items[index];
+            const color = "";
+            if (index % 2){
+                color = "white"
+            }
             return(<Delivery key={order.id} order={order} add={this.addOrder} username={this.props.username} />);
         };
 
@@ -97,14 +101,14 @@ export default class Shoppinglist extends Component{
                          items={this.state.pendingOrders}
                          rowComponent={pendingRow}
                          height={300}
-                         width={300}
-                          />
+                         width={500}
+                        />
                         <h2>Past Orders</h2>
                         <List 
                          items={this.state.deliveredOrders}
                          rowComponent={deliveredRow}
                          height={300}
-                         width={300}
+                         width={500}
                           />
                     </Box>
                 </Box>
